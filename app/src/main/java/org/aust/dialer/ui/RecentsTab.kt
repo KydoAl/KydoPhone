@@ -27,6 +27,7 @@ import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PersonAdd
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Voicemail
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -127,10 +128,8 @@ fun RecentsTab(vm: DialerViewModel, listState: LazyListState, onOpenContact: (Lo
                 val title = contact?.name ?: e.cachedName.orEmpty()
                 val matchesSearch = q.isEmpty() ||
                     title.lowercase().contains(q) ||
-                    group.entries.any {
-                        Format.number(it.number).lowercase().contains(q) ||
-                            it.number.contains(q)
-                    }
+                    Format.number(e.number).lowercase().contains(q) ||
+                    e.number.contains(q)
                 val matchesMissed = !missedOnly || group.entries.any { it.type == CallLog.Calls.MISSED_TYPE }
                 matchesSearch && matchesMissed
             }
@@ -250,6 +249,7 @@ fun RecentsTab(vm: DialerViewModel, listState: LazyListState, onOpenContact: (Lo
             dismissButton = { TextButton(onClick = { confirmDelete = null }) { Text(stringResource(R.string.action_cancel)) } },
         )
     }
+}
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
