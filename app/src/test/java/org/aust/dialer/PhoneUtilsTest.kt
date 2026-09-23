@@ -36,11 +36,11 @@ class PhoneUtilsTest {
         assertFalse(PhoneUtils.isUnknown("123"))
     }
 
-    @Test fun callGroupingMergesConsecutiveSameNumberAndType() {
+    @Test fun callGroupingMergesAllCallsForSameNumber() {
         fun e(id: Long, n: String, t: Int) = CallLogEntry(id, n, t, id, 0, null, null)
         val groups = CallGrouping.group(
             listOf(e(5, "0933123456", 1), e(4, "+963933123456", 1), e(3, "0933123456", 3), e(2, "", 1), e(1, "", 1)),
         )
-        assertEquals(listOf(2, 1, 1, 1), groups.map { it.count })
+        assertEquals(listOf(3, 1, 1), groups.map { it.count })
     }
 }
